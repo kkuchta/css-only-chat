@@ -1,0 +1,28 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    byebug (11.0.1)
+    coderay (1.1.2)
+    dotenv (2.7.2)
+    method_source (0.9.2)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.7.0)
+      byebug (~> 11.0)
+      pry (~> 0.10)
+    puma (3.12.1)
+    rack (2.0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (>= 2.0)
+  dotenv
+  pry-byebug
+  puma
+  rack
+
+BUNDLED WITH
+   2.0.1
