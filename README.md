@@ -72,3 +72,5 @@ If the buttons you pressed were "h", "e", and "l", then the "a" button's backgro
 **What could go wrong with this technique?** Broken by browser bg-image handling changes; long-request timeouts; running out of threads; fast-clicking bugs; generic concurrency headaches; poor handling by proxies; it's crazy inaccessible; etc etc
 
 **Should I use this in real life?** Dear god yes.
+
+**I have an idea for how this could be made better/worse/hackier** [Tweet at me (@kkuchta)](https://twitter.com/kkuchta).  I'm always down to see a terrible idea taken futher!
