@@ -8,8 +8,6 @@ Bundler.require
 require 'dotenv'
 Dotenv.load
 
-use Rack::Reloader, 0
-#use Rack::ContentLength
 use Rack::Chunked
 
 require './server'
