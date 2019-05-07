@@ -1,4 +1,4 @@
-![](https://i.imgur.com/cTZ55Bi.gif)
+![](https://media.giphy.com/media/dWkxAZTg9NbAhvRqOe/giphy.gif)
 
 # CSS-Only Chat
 A truly monstrous async web chat using no JS whatsoever on the frontend
