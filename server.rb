@@ -7,8 +7,10 @@ MESSAGE_LIST_KEY='message_list'
 ISO8601='%Y-%m-%dT%H:%M:%S.%L%z'
 
 class Server
+  def redis
+    @redis ||= Redis.new(url: ENV['REDIS_URL'])
+  end
   def call(env)
-    @@redis ||= Redis.new(url: ENV['REDIS_URL'])
     request = Rack::Request.new(env)
 
     response = case request.path
@@ -27,11 +29,11 @@ class Server
           client_id: button_press[:client_id],
           body: button_press[:current_message]
         }
-        @@redis.lpush(MESSAGE_LIST_KEY, new_message)
-        @@redis.publish(NEW_MESSAGE_CHANNEL, '')
+        redis.lpush(MESSAGE_LIST_KEY, new_message)
+        redis.publish(NEW_MESSAGE_CHANNEL, '')
       else
         puts "Publishing on UPDATED_CLIENT_CHANNEL"
-        @@redis.publish(UPDATED_CLIENT_CHANNEL, {
+        redis.publish(UPDATED_CLIENT_CHANNEL, {
           client_id: button_press[:client_id],
           new_string: button_press[:current_message] + button_press[:new_letter]
         }.to_json)
@@ -66,31 +68,34 @@ class Server
 end
 
 class IndexStreamer
+  def redis
+    @redis ||= Redis.new(url: ENV['REDIS_URL'])
+  end
   def each(&each_block)
-    @@redis ||= Redis.new(url: ENV['REDIS_URL'])
-
     client_id = Faker::Name.first_name + rand(1000).to_s
 
     each_block.call(keys_html('', client_id))
 
-    puts "subscribing"
+    puts "#{client_id}: subscribing"
 
-    @@redis.subscribe(UPDATED_CLIENT_CHANNEL) do |on|
+    redis.subscribe(UPDATED_CLIENT_CHANNEL) do |on|
       on.message do |channel, message|
         message = JSON.parse(message)
-        puts "Just received message #{message} on channel #{channel}"
+        puts "#{client_id}: Just received message #{message} on channel #{channel}"
         case channel
         when NEW_MESSAGE_CHANNEL
           # ... TODO
         when UPDATED_CLIENT_CHANNEL
-          puts "clientid = #{client_id}"
-          puts "message clientid = #{message['client_id']}"
+          puts "#{client_id}: got UPDATED_CLIENT_CHANNEL"
           if message['client_id'] == client_id
+            puts "#{client_id}: it's to me.  sending keys"
             each_block.call(keys_html(message['new_string'], client_id))
           end
         end
       end
     end
+
+    puts "#{client_id}: post-subscribe block?!"
   end
 
   def encode_image_name(client_id:, current_message:, new_letter:)
