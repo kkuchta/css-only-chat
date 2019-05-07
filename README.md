@@ -61,9 +61,14 @@ If the buttons you pressed were "h", "e", and "l", then the "a" button's backgro
 - Because the data-sending and data-receiving happens on different threads, we need inter-thread communication.  That sounds like work, so we'll just use Redis pubsub for that.
 
 ### FAQ
-**What inspired this?** This [clever tweet](https://twitter.com/davywtf/status/1124130932573839360) by davywtf.
+**What inspired this?** Chernobyl, Hindenburg, The Tacoma Narrows Bridge...
+
+**Really?** No, it was this [clever tweet](https://twitter.com/davywtf/status/1124130932573839360) by davywtf.
+
 **Why's your code suck** Why do _you_ suck?
-**No but really** Because I was mostly making this up as I went.  There's a lot of exploratory coding here that I only minimally cleaned up.
+
+**No but really** Because I was mostly making this up as I went.  There's a lot of exploratory coding here that I only minimally cleaned up.  If I rebuilt it I'd store the UI state for a client in redis and just push it out in its entirety when needed via a single generic screen-updating mechanism.
+
 **What could go wrong with this technique?** Broken by browser bg-image handling changes; long-request timeouts; running out of threads; fast-clicking bugs; generic concurrency headaches; poor handling by proxies; it's crazy inaccessible; etc etc
+
 **Should I use this in real life?** Dear god yes.
-**
