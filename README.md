@@ -46,7 +46,7 @@ Now, all this lets us do is periodically append html to the page.  What can we d
 5. Finially we wait until the next update we want to send and GOTO 3.
 
 ### Single-use buttons?
-Ok, so we have that problem earlier where each button is only single-use.  It tries to send a get request one, then never will again.
+Ok, so we have that problem earlier where each button is only single-use.  It tries to send a get request once, then never will again.
 
 Thankfully, our method of receiving data fixes that for us.  Here's what happens:
 
