@@ -107,7 +107,7 @@ class IndexStreamer
 
   def each(&each_block)
     # Generate a random name to differentiate clients
-    # If a name exists twice, we reroll the name
+    # If a name already exists in the array, we reroll the name
     begin
     client_id = Faker::Name.first_name + rand(1000).to_s
     end while CLIENT_IDS.include?(client_id)
