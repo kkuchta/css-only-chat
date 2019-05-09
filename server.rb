@@ -11,6 +11,9 @@ NEW_MESSAGE_CHANNEL = 'new_message_channel'.freeze
 UPDATED_CLIENT_CHANNEL = 'updated_client_channel'.freeze
 MESSAGE_LIST_KEY = 'message_list'.freeze
 
+# User ID array to make sure no id exists twice
+CLIENT_IDS = []
+
 # Clear out any old messages when we boot up
 Redis.new(url: ENV['REDIS_URL']).del(MESSAGE_LIST_KEY)
 
@@ -105,7 +108,11 @@ class IndexStreamer
   def each(&each_block)
     # Generate a random name to differentiate clients  Duplicates will break
     # everything, but ¯\_(ツ)_/¯
+    begin
     client_id = Faker::Name.first_name + rand(1000).to_s
+    end while CLIENT_IDS.include?(client_id)
+    puts "New client #{client_id} not in #{CLIENT_IDS}"
+    CLIENT_IDS.push(client_id)
 
     # Send the opening explanatory blurb and the initial onscreen keyboard.
     each_block.call(intro_html(client_id))
