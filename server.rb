@@ -111,7 +111,7 @@ class IndexStreamer
     begin
     client_id = Faker::Name.first_name + rand(1000).to_s
     end while CLIENT_IDS.include?(client_id)
-    puts "New client #{client_id} not in #{CLIENT_IDS}"
+    puts "New client #{client_id}"
     CLIENT_IDS.push(client_id)
 
     # Send the opening explanatory blurb and the initial onscreen keyboard.
