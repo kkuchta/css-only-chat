@@ -74,3 +74,11 @@ If the buttons you pressed were "h", "e", and "l", then the "a" button's backgro
 **Should I use this in real life?** Dear god yes.
 
 **I have an idea for how this could be made better/worse/hackier** [Tweet at me (@kkuchta)](https://twitter.com/kkuchta).  I'm always down to see a terrible idea taken further!
+
+### Practical Details
+
+If you want to install and use this locally you should:
+1. Re-evaluate your life choices
+2. If you simply must continue, check out INSTALL.md
+
+If you want to contribute, see number 1 above.  After that, just fork this repo, make a change, and then open a PR against this repo.
