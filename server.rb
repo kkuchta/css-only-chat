@@ -103,9 +103,13 @@ class IndexStreamer
   end
 
   def each(&each_block)
-    # Generate a random name to differentiate clients  Duplicates will break
-    # everything, but ¯\_(ツ)_/¯
+    # Generate a random name to differentiate clients
+    # If a name already exists, the name is rerolled
+    begin
     client_id = Faker::Name.first_name + rand(1000).to_s
+    end while Redis.new(url: ENV['REDIS_URL']).sismember("client_ids", client_id)
+    Redis.new(url: ENV['REDIS_URL']).sadd("client_ids", client_id)
+    puts "new client #{client_id}"
 
     # Send the opening explanatory blurb and the initial onscreen keyboard.
     each_block.call(intro_html(client_id))
