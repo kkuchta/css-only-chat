@@ -184,8 +184,9 @@ class IndexStreamer
         new_letter: letter
       )
       unique_class = 'insert_' + image_name
-      result = "<button class='letter_#{letter} #{unique_class}'>#{label}</button>"
-      result << "<style>.#{unique_class}:active { background-image: url('img/#{image_name}') }</style>"
+      access_key = letter != '-' ? "accesskey='" + letter + "'" : ""
+      result = "<button #{access_key} class='letter_#{letter} #{unique_class}'>#{label}</button>"
+      result << "<style>.#{unique_class}:active, .#{unique_class}:focus { background-image: url('img/#{image_name}') }</style>"
 
       # hide previous generation
       unless previous_string == ''
