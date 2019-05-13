@@ -33,7 +33,7 @@ Now, of course, this only works once per button (since a browser won't try to lo
 
 Since we can't use JS, it's really hard to change a page after it's already been loaded.  But it *is* possible.
 
-Back before websockets were widly supported, we had to use clever hacks if we wanted to push data from a server to a client in an ongoing basis.  One such hack was just to make the page never finish loading.  It turns out that you can tell the browser to start rendering a page before it's finished loading (using the `Transfer-Encoding: chunked` http header).  And when you do that, you don't _actually_ have to stop loading the page.  You can just keep adding stuff to the bottom of the html forever, at whatever rate you want.
+Back before websockets were widely supported, we had to use clever hacks if we wanted to push data from a server to a client in an ongoing basis.  One such hack was just to make the page never finish loading.  It turns out that you can tell the browser to start rendering a page before it's finished loading (using the `Transfer-Encoding: chunked` http header).  And when you do that, you don't _actually_ have to stop loading the page.  You can just keep adding stuff to the bottom of the html forever, at whatever rate you want.
 
 So, for example, you could start sending a normal html page, then just stop sending html (while still telling the client you're sending) until you're ready to deliver another message.
 
@@ -43,10 +43,10 @@ Now, all this lets us do is periodically append html to the page.  What can we d
 2. We stop loading html for a while until we want to send some sort of update.
 3. Now we load up a `<style>` element that `display: none`'s all the previous html
 4. Then we load up whatever _new_ html we want to show
-5. Finially we wait until the next update we want to send and GOTO 3.
+5. Finally we wait until the next update we want to send and GOTO 3.
 
 ### Single-use buttons?
-Ok, so we have that problem earlier where each button is only single-use.  It tries to send a get request one, then never will again.
+Ok, so we have that problem earlier where each button is only single-use.  It tries to send a get request once, then never will again.
 
 Thankfully, our method of receiving data fixes that for us.  Here's what happens:
 
@@ -73,4 +73,12 @@ If the buttons you pressed were "h", "e", and "l", then the "a" button's backgro
 
 **Should I use this in real life?** Dear god yes.
 
-**I have an idea for how this could be made better/worse/hackier** [Tweet at me (@kkuchta)](https://twitter.com/kkuchta).  I'm always down to see a terrible idea taken futher!
+**I have an idea for how this could be made better/worse/hackier** [Tweet at me (@kkuchta)](https://twitter.com/kkuchta).  I'm always down to see a terrible idea taken further!
+
+### Practical Details
+
+If you want to install and use this locally you should:
+1. Re-evaluate your life choices
+2. If you simply must continue, check out INSTALL.md
+
+If you want to contribute, see number 1 above.  After that, just fork this repo, make a change, and then open a PR against this repo.
