@@ -12,6 +12,5 @@ RUN gem update --system && \
     bundle update --bundler && \
     bundle install
 COPY . .
-COPY for-docker.env .env
 
 CMD ["puma"]

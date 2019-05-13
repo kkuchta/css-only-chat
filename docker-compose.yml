@@ -9,6 +9,8 @@ services:
       - redis
     ports:
       - "9292:9292"
+    environment:
+      REDIS_URL: redis://redis:6379
   redis:
     container_name: redis
     image: redis
