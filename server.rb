@@ -13,8 +13,9 @@ MESSAGE_LIST_KEY = 'message_list'.freeze
 CLIENT_IDS_KEY = 'client_ids'.freeze
 
 # Clear out any old messages when we boot up
-Redis.new(url: ENV['REDIS_URL']).del(MESSAGE_LIST_KEY)
-Redis.new(url: ENV['REDIS_URL']).del(CLIENT_IDS_KEY)
+redis = Redis.new(url: ENV['REDIS_URL'])
+redis.del(MESSAGE_LIST_KEY)
+redis.del(CLIENT_IDS_KEY)
 
 
 class Server
@@ -110,8 +111,8 @@ class IndexStreamer
     # If a name already exists, the name is rerolled
     begin
     client_id = Faker::Name.first_name + rand(1000).to_s
-    end while Redis.new(url: ENV['REDIS_URL']).sismember(CLIENT_IDS_KEY, client_id)
-    Redis.new(url: ENV['REDIS_URL']).sadd(CLIENT_IDS_KEY, client_id)
+    end while redis.sismember(CLIENT_IDS_KEY, client_id)
+    redis.sadd(CLIENT_IDS_KEY, client_id)
     puts "new client #{client_id}"
 
     # Send the opening explanatory blurb and the initial onscreen keyboard.
