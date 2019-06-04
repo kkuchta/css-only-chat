@@ -10,9 +10,13 @@ Signal.trap(2) { exit }
 NEW_MESSAGE_CHANNEL = 'new_message_channel'.freeze
 UPDATED_CLIENT_CHANNEL = 'updated_client_channel'.freeze
 MESSAGE_LIST_KEY = 'message_list'.freeze
+CLIENT_IDS_KEY = 'client_ids'.freeze
 
 # Clear out any old messages when we boot up
-Redis.new(url: ENV['REDIS_URL']).del(MESSAGE_LIST_KEY)
+redis = Redis.new(url: ENV['REDIS_URL'])
+redis.del(MESSAGE_LIST_KEY)
+redis.del(CLIENT_IDS_KEY)
+
 
 class Server
   def call(env)
@@ -103,9 +107,13 @@ class IndexStreamer
   end
 
   def each(&each_block)
-    # Generate a random name to differentiate clients  Duplicates will break
-    # everything, but ¯\_(ツ)_/¯
+    # Generate a random name to differentiate clients
+    # If a name already exists, the name is rerolled
+    begin
     client_id = Faker::Name.first_name + rand(1000).to_s
+    end while redis.sismember(CLIENT_IDS_KEY, client_id)
+    redis.sadd(CLIENT_IDS_KEY, client_id)
+    puts "new client #{client_id}"
 
     # Send the opening explanatory blurb and the initial onscreen keyboard.
     each_block.call(intro_html(client_id))
