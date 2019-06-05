@@ -1,0 +1,16 @@
+version: '3.2'
+
+services:
+  chat:
+    container_name: chat
+    build:
+      context: .
+    depends_on:
+      - redis
+    ports:
+      - "9292:9292"
+    environment:
+      REDIS_URL: redis://redis:6379
+  redis:
+    container_name: redis
+    image: redis
