@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  css-chat:
+    build: .
+    ports:
+      - "9292:9292"
+    links:
+      - redis
+    environment:
+      REDIS_URL: redis://redis
+  redis:
+    image: redis:6-alpine
