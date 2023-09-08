@@ -63,7 +63,7 @@ If the buttons you pressed were "h", "e", and "l", then the "a" button's backgro
 ### FAQ
 **What inspired this?** Chernobyl, Hindenburg, The Tacoma Narrows Bridge...
 
-**Really?** No, it was this [clever tweet](https://twitter.com/davywtf/status/1124130932573839360) by davywtf.
+**Really?** No, it was this [clever tweet](https://twitter.com/davywtf/status/1124130932573839360) by davywtf. (Tweet no longer available but [archived here](https://web.archive.org/web/20190507204827/https://twitter.com/davywtf/status/1124130932573839360).)
 
 **Why's your code suck** Why do _you_ suck?
 
